@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import PhoneFrame from './components/PhoneFrame'
+import Splash from './components/Splash'
 import { RoleRoot, TabFrame } from './components/RoleLayouts'
 
 import Launcher from './screens/Launcher'
@@ -29,8 +31,10 @@ import Zone from './screens/driver/Zone'
 import DriverProfile from './screens/driver/Profile'
 
 export default function App() {
+  const [showSplash, setShowSplash] = useState(true)
   return (
     <PhoneFrame>
+      {showSplash && <Splash onDone={() => setShowSplash(false)} />}
       <Routes>
         <Route path="/" element={<Launcher />} />
 

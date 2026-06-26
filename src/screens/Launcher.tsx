@@ -18,8 +18,8 @@ export default function Launcher() {
             <Wordmark size="lg" tone="light" />
             <LanguageToggle tone="onGreen" />
           </div>
-          <p className="mt-3 text-[12.5px] font-semibold uppercase tracking-[0.2em] text-white">
-            Konekta. Kain. Kabuhayan.
+          <p className="mt-3 text-[12.5px] font-semibold uppercase tracking-[0.18em] text-white">
+            Lokal na Ani. Lokal na Asenso.
           </p>
           <h1 className="mt-5 max-w-[14ch] font-heading text-[34px] font-extrabold leading-[1.05] tracking-tight">
             {t('Walang sayang na ani.', 'No harvest goes to waste.')}

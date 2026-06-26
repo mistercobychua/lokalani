@@ -1,15 +1,19 @@
-import type { ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { Signal, Wifi, BatteryMedium } from 'lucide-react'
-import { useApp } from '../lib/AppContext'
 import { formatClock } from '../lib/format'
 
 /**
  * Centers the app in a soft phone bezel on desktop; full-bleed on mobile.
- * Provides a faux status bar (live demo time + signal/wifi/battery + notch).
+ * Provides a faux status bar (real wall-clock time + signal/wifi/battery + notch).
  * The routed screen fills the remaining height and manages its own scroll.
  */
 export default function PhoneFrame({ children }: { children: ReactNode }) {
-  const { now } = useApp()
+  // Real device time, ticking every second.
+  const [now, setNow] = useState(() => new Date())
+  useEffect(() => {
+    const id = window.setInterval(() => setNow(new Date()), 1000)
+    return () => window.clearInterval(id)
+  }, [])
 
   return (
     <div className="min-h-dvh w-full flex items-stretch justify-center sm:items-center sm:py-6">
