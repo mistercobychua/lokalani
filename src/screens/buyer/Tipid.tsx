@@ -26,7 +26,7 @@ export default function Tipid() {
             20–40% na tipid sa mga sangkap — mas abot-kaya ang pagkain, mas kumikita ka.
           </p>
           <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1.5 text-[13px] font-semibold">
-            <TrendingDown className="size-4 text-[#f4d9a8]" strokeWidth={2.5} />
+            <TrendingDown className="size-4 text-sage" strokeWidth={2.5} />
             ~32% mas mura kaysa regular na presyo
           </div>
         </div>

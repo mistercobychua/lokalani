@@ -57,7 +57,7 @@ export default function Palengke() {
             Within 2 km
           </span>
           <span className="inline-flex items-center gap-1.5 rounded-full glass-green px-3 py-1.5 text-[13px] font-semibold">
-            <Sparkles className="size-4 text-[#f4d9a8]" strokeWidth={2.5} />
+            <Sparkles className="size-4 text-sage" strokeWidth={2.5} />
             {listings.length} alok ngayon
           </span>
         </div>

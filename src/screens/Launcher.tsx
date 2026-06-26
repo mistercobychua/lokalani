@@ -12,14 +12,17 @@ export default function Launcher() {
       <header className="relative overflow-hidden bg-gradient-to-b from-green to-green-dark px-6 pb-20 pt-10 text-white">
         <div className="relative z-10">
           <Wordmark size="lg" tone="light" />
-          <h1 className="mt-6 max-w-[14ch] font-heading text-[34px] font-extrabold leading-[1.05] tracking-tight">
+          <p className="mt-3 text-[12.5px] font-semibold uppercase tracking-[0.2em] text-white">
+            Konekta. Kain. Kabuhayan.
+          </p>
+          <h1 className="mt-5 max-w-[14ch] font-heading text-[34px] font-extrabold leading-[1.05] tracking-tight">
             Walang sayang na ani.
           </h1>
           <p className="mt-3 max-w-[34ch] text-[15.5px] leading-snug text-white">
             Ang surplus ng palengke ngayong hapon — murang sariwa para sa mga karinderya, malapit lang.
           </p>
           <span className="mt-4 inline-flex items-center gap-1.5 rounded-full glass-green px-3 py-1.5 text-[13px] font-semibold">
-            <Leaf className="size-4 text-[#f4d9a8]" strokeWidth={2.4} />
+            <Leaf className="size-4 text-sage" strokeWidth={2.4} />
             Surplus window ngayon: 3:00–6:00 PM
           </span>
         </div>

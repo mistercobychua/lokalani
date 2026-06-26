@@ -112,9 +112,9 @@ function DiscountCurve({ now, close, orig, dropTime, freshUntil }: { now: number
   return (
     <div className="flex items-center gap-3">
       <svg viewBox="0 0 120 40" className="h-10 w-[120px] shrink-0" aria-hidden>
-        <polyline points={`6,${y(orig)} 60,${y(now)} 114,${y(close)}`} fill="none" stroke="#4a7c59" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="6" cy={y(orig)} r="3" fill="#8fb39b" />
-        <circle cx="60" cy={y(now)} r="3.5" fill="#4a7c59" />
+        <polyline points={`6,${y(orig)} 60,${y(now)} 114,${y(close)}`} fill="none" stroke="#1e6a41" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="6" cy={y(orig)} r="3" fill="#a8d08d" />
+        <circle cx="60" cy={y(now)} r="3.5" fill="#1e6a41" />
         <circle cx="114" cy={y(close)} r="3" fill="#d99b45" />
       </svg>
       <div className="grid grid-cols-3 gap-2 text-center text-[11.5px]">

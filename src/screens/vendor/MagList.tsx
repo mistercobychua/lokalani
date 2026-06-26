@@ -168,7 +168,7 @@ export default function MagList() {
                 step={1}
                 value={discount}
                 onChange={(e) => setDiscount(Number(e.target.value))}
-                className="mt-3 w-full accent-[#4a7c59]"
+                className="mt-3 w-full accent-[#1e6a41]"
                 aria-label="Antas ng diskwento"
               />
               <div className="mt-1 flex items-center justify-between">

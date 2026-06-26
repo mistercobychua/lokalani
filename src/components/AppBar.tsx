@@ -1,8 +1,9 @@
-import { ArrowLeft, HelpCircle, ArrowLeftRight, Sprout } from 'lucide-react'
+import { ArrowLeft, HelpCircle, ArrowLeftRight } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../lib/AppContext'
 import type { Role } from '../types'
 import { roleMeta } from '../lib/roles'
+import LeafMark from './LeafMark'
 
 interface Props {
   title: string
@@ -34,8 +35,8 @@ export default function AppBar({ title, role, helpKey, backTo, showSwitch = true
             <span className="text-[13px] font-semibold">Balik</span>
           </button>
         ) : (
-          <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-white/15 text-[#f4d9a8]">
-            <Sprout className="size-6" strokeWidth={2.4} />
+          <span className="grid size-11 shrink-0 place-items-center rounded-xl glass-green">
+            <LeafMark className="size-7" variant="white" />
           </span>
         )}
 

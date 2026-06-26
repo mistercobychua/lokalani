@@ -7,14 +7,15 @@
 @theme {
   /* Type */
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-heading: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'Poppins', ui-sans-serif, system-ui, sans-serif;
 
-  /* Brand — green-forward */
-  --color-green: #4a7c59; /* PRIMARY */
-  --color-green-dark: #34573f;
-  --color-green-deep: #294433;
-  --color-sage: #8fb39b; /* decorative fills only — never small text */
-  --color-green-tint: #eaf2ec;
+  /* Brand — official LokalANI palette */
+  --color-green: #1e6a41; /* PRIMARY — AA with white text */
+  --color-green-dark: #18553a;
+  --color-green-deep: #0f3d2e; /* official deepest forest */
+  --color-leaf: #5ba745; /* official bright leaf accent — ink/dark text only */
+  --color-sage: #a8d08d; /* official light sage — decorative fills */
+  --color-green-tint: #e7f0df;
 
   /* Warm accents (calibrated for AA text use) */
   --color-amber: #d99b45; /* fills + dark text on top */
@@ -26,10 +27,10 @@
   --color-clay: #a65a4f;
 
   /* Neutrals */
-  --color-surface: #f4f6f1;
-  --color-ink: #23241f;
-  --color-muted: #6b7268;
-  --color-border: #e2e6dd;
+  --color-surface: #f6f4ef; /* official cream */
+  --color-ink: #233323; /* official charcoal-green */
+  --color-muted: #5c6657;
+  --color-border: #e4e6dc;
   --color-white: #ffffff;
 
   /* Radii */
@@ -58,8 +59,8 @@
     color: var(--color-ink);
     /* Calm page backdrop behind the phone frame on desktop */
     background:
-      radial-gradient(120% 80% at 50% -10%, #dfeadf 0%, transparent 55%),
-      linear-gradient(180deg, #e7eee6 0%, #d9e3d8 100%);
+      radial-gradient(120% 80% at 50% -10%, #dcebd2 0%, transparent 55%),
+      linear-gradient(180deg, #e3edda 0%, #d3e0c8 100%);
     background-attachment: fixed;
     min-height: 100dvh;
     -webkit-font-smoothing: antialiased;

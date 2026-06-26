@@ -45,7 +45,7 @@ export default function Jobs() {
               {driverOnline ? 'Tumatanggap ng deliveries' : 'Buksan para makakita ng trabaho'}
             </span>
           </span>
-          <span className={`relative h-7 w-12 rounded-full transition-colors ${driverOnline ? 'bg-[#a7d3b4]' : 'bg-white/25'}`}>
+          <span className={`relative h-7 w-12 rounded-full transition-colors ${driverOnline ? 'bg-leaf' : 'bg-white/25'}`}>
             <span className={`absolute top-1 size-5 rounded-full bg-white shadow transition-all ${driverOnline ? 'left-6' : 'left-1'}`} />
           </span>
         </button>

@@ -4,7 +4,7 @@ const map: Record<OrderStatus, { label: string; tint: string; text: string; dot:
   reserved: { label: 'Naka-reserve', tint: 'bg-green-tint', text: 'text-green-deep', dot: 'bg-sage' },
   picking: { label: 'Kinukuha ni driver', tint: 'bg-amber-tint', text: 'text-amber-deep', dot: 'bg-amber' },
   on_the_way: { label: 'Padating na', tint: 'bg-green-tint', text: 'text-green-deep', dot: 'bg-green' },
-  delivered: { label: 'Dumating na', tint: 'bg-green-deep', text: 'text-white', dot: 'bg-[#a7d3b4]' },
+  delivered: { label: 'Dumating na', tint: 'bg-green-deep', text: 'text-white', dot: 'bg-sage' },
 }
 
 export const statusOrder: OrderStatus[] = ['reserved', 'picking', 'on_the_way', 'delivered']

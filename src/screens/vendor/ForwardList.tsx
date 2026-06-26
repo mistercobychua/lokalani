@@ -112,7 +112,7 @@ export default function ForwardList() {
             max={40}
             value={discount}
             onChange={(e) => setDiscount(Number(e.target.value))}
-            className="w-full accent-[#4a7c59]"
+            className="w-full accent-[#1e6a41]"
             aria-label="Antas ng diskwento"
           />
           <div className="mt-1 flex items-center justify-between">

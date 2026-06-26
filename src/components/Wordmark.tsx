@@ -1,4 +1,4 @@
-import { Sprout } from 'lucide-react'
+import LeafMark from './LeafMark'
 
 interface Props {
   size?: 'sm' | 'md' | 'lg' | 'xl'
@@ -8,29 +8,20 @@ interface Props {
 }
 
 const sizes = {
-  sm: { text: 'text-base', icon: 'size-4', pad: 'p-1.5', box: 'rounded-lg' },
-  md: { text: 'text-xl', icon: 'size-5', pad: 'p-2', box: 'rounded-xl' },
-  lg: { text: 'text-3xl', icon: 'size-7', pad: 'p-2.5', box: 'rounded-2xl' },
-  xl: { text: 'text-4xl', icon: 'size-8', pad: 'p-3', box: 'rounded-2xl' },
+  sm: { text: 'text-base', mark: 'size-5' },
+  md: { text: 'text-xl', mark: 'size-7' },
+  lg: { text: 'text-3xl', mark: 'size-9' },
+  xl: { text: 'text-4xl', mark: 'size-11' },
 }
 
-/** LokalANI wordmark with a sprout glyph (harvest motif). */
+/** LokalANI wordmark with the leaf-cradle mark. Uniform colour per brand. */
 export default function Wordmark({ size = 'md', tone = 'light', className = '' }: Props) {
   const s = sizes[size]
-  const lokal = tone === 'light' ? 'text-white' : 'text-green-deep'
-  const ani = tone === 'light' ? 'text-[#f4d9a8]' : 'text-amber-deep'
-  const glyphWrap =
-    tone === 'light' ? 'bg-white/15 text-[#f4d9a8]' : 'bg-green-tint text-green'
-
+  const word = tone === 'light' ? 'text-white' : 'text-green-deep'
   return (
     <span className={`inline-flex items-center gap-2 ${className}`}>
-      <span className={`grid place-items-center ${s.pad} ${s.box} ${glyphWrap}`}>
-        <Sprout className={s.icon} strokeWidth={2.4} />
-      </span>
-      <span className={`font-heading font-extrabold tracking-tight ${s.text}`}>
-        <span className={lokal}>Lokal</span>
-        <span className={ani}>ANI</span>
-      </span>
+      <LeafMark className={s.mark} variant={tone === 'light' ? 'white' : 'color'} />
+      <span className={`font-heading font-extrabold tracking-tight ${s.text} ${word}`}>LokalANI</span>
     </span>
   )
 }
