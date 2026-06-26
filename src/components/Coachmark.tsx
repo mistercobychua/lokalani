@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Hand, X } from 'lucide-react'
 import { useApp } from '../lib/AppContext'
+import { useT } from '../lib/i18n'
 import type { Role } from '../types'
 
 export interface CoachStep {
@@ -19,6 +20,7 @@ const placement: Record<CoachStep['where'], string> = {
 /** Skippable first-run walkthrough (≤3 steps). Overlay, not an extra screen. */
 export default function Coachmark({ role, steps }: { role: Role; steps: CoachStep[] }) {
   const { coachSeen, markCoachSeen } = useApp()
+  const t = useT()
   const [i, setI] = useState(0)
 
   if (coachSeen[role]) return null
@@ -67,14 +69,14 @@ export default function Coachmark({ role, steps }: { role: Role; steps: CoachSte
                 onClick={finish}
                 className="rounded-xl px-3 py-2 text-[14px] font-semibold text-muted transition hover:bg-surface"
               >
-                Skip
+                {t('Laktawan', 'Skip')}
               </button>
               <button
                 type="button"
                 onClick={() => (last ? finish() : setI((v) => v + 1))}
                 className="tap-target rounded-xl bg-green px-4 py-2.5 text-[14px] font-bold text-white shadow-card transition active:scale-95"
               >
-                {last ? 'Tapos na' : 'Susunod'}
+                {last ? t('Tapos na', 'Done') : t('Susunod', 'Next')}
               </button>
             </div>
           </div>

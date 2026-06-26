@@ -117,10 +117,10 @@ export function listingById(id: string): Listing | undefined {
   return listings.find((l) => l.id === id)
 }
 
-export const categoryLabels: { key: 'lahat' | Listing['category']; label: string; emoji: string }[] = [
-  { key: 'lahat', label: 'Lahat', emoji: '🧺' },
-  { key: 'gulay', label: 'Gulay', emoji: '🥬' },
-  { key: 'karne', label: 'Karne', emoji: '🍖' },
-  { key: 'isda', label: 'Isda', emoji: '🐟' },
-  { key: 'prutas', label: 'Prutas', emoji: '🍌' },
+export const categoryLabels: { key: 'lahat' | Listing['category']; label: string; labelEn: string; emoji: string }[] = [
+  { key: 'lahat', label: 'Lahat', labelEn: 'All', emoji: '🧺' },
+  { key: 'gulay', label: 'Gulay', labelEn: 'Veg', emoji: '🥬' },
+  { key: 'karne', label: 'Karne', labelEn: 'Meat', emoji: '🍖' },
+  { key: 'isda', label: 'Isda', labelEn: 'Fish', emoji: '🐟' },
+  { key: 'prutas', label: 'Prutas', labelEn: 'Fruit', emoji: '🍌' },
 ]

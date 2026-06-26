@@ -75,7 +75,7 @@ export default function ListingDetail() {
       {/* Header */}
       <div className="px-4 pt-3">
         <div className="relative">
-          <ProduceGlyph emoji={listing.emoji} size="xl" />
+          <ProduceGlyph emoji={listing.emoji} imageId={listing.id} size="xl" />
           <span className="absolute right-3 top-3 rounded-xl bg-danger-deep px-2.5 py-1 text-[13px] font-bold text-white shadow-card">
             −{listing.discountPct}% off
           </span>

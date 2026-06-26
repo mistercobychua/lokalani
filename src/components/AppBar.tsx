@@ -1,6 +1,7 @@
 import { ArrowLeft, HelpCircle, ArrowLeftRight } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../lib/AppContext'
+import { useT } from '../lib/i18n'
 import type { Role } from '../types'
 import { roleMeta } from '../lib/roles'
 import LeafMark from './LeafMark'
@@ -20,6 +21,7 @@ interface Props {
 export default function AppBar({ title, role, helpKey, backTo, showSwitch = true, subtitle }: Props) {
   const navigate = useNavigate()
   const { openHelp } = useApp()
+  const t = useT()
   const meta = roleMeta[role]
 
   return (
@@ -32,7 +34,7 @@ export default function AppBar({ title, role, helpKey, backTo, showSwitch = true
             className="tap-target flex items-center gap-1 rounded-xl pl-1 pr-2.5 text-white/95 transition-colors hover:bg-white/15 active:scale-95"
           >
             <ArrowLeft className="size-6" strokeWidth={2.4} />
-            <span className="text-[13px] font-semibold">Balik</span>
+            <span className="text-[13px] font-semibold">{t('Balik', 'Back')}</span>
           </button>
         ) : (
           <span className="grid size-11 shrink-0 place-items-center rounded-xl glass-green">
@@ -51,22 +53,22 @@ export default function AppBar({ title, role, helpKey, backTo, showSwitch = true
         <button
           type="button"
           onClick={() => openHelp(helpKey)}
-          aria-label="Tulong"
+          aria-label={t('Tulong', 'Help')}
           className="tap-target flex flex-col items-center justify-center rounded-xl px-2 text-white transition-colors hover:bg-white/15 active:scale-95"
         >
           <HelpCircle className="size-[22px]" strokeWidth={2.3} />
-          <span className="text-[10.5px] font-semibold leading-none mt-0.5">Tulong</span>
+          <span className="text-[10.5px] font-semibold leading-none mt-0.5">{t('Tulong', 'Help')}</span>
         </button>
 
         {showSwitch && (
           <button
             type="button"
             onClick={() => navigate('/')}
-            aria-label="Palit ng role"
+            aria-label={t('Palit ng role', 'Switch role')}
             className="tap-target flex flex-col items-center justify-center rounded-xl px-2 text-white transition-colors hover:bg-white/15 active:scale-95"
           >
             <ArrowLeftRight className="size-[22px]" strokeWidth={2.3} />
-            <span className="text-[10.5px] font-semibold leading-none mt-0.5">Palit</span>
+            <span className="text-[10.5px] font-semibold leading-none mt-0.5">{t('Palit', 'Switch')}</span>
           </button>
         )}
       </div>

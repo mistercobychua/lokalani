@@ -15,7 +15,7 @@ export default function ListingCard({ listing }: { listing: Listing }) {
       className="block rounded-card border border-border bg-white p-3 shadow-card transition active:scale-[0.99]"
     >
       <div className="flex gap-3">
-        <ProduceGlyph emoji={listing.emoji} size="lg" />
+        <ProduceGlyph emoji={listing.emoji} imageId={listing.id} size="lg" />
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
             <h3 className="font-heading text-[17px] font-extrabold leading-tight text-ink">
