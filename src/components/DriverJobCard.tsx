@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom'
 import { MapPin, Package, Route, BadgeCheck, ChevronRight } from 'lucide-react'
 import type { Job } from '../types'
 import { peso } from '../lib/format'
+import { useT } from '../lib/i18n'
 
 export default function DriverJobCard({ job }: { job: Job }) {
+  const t = useT()
   return (
     <Link
       to={`/driver/job/${job.id}`}
@@ -25,7 +27,7 @@ export default function DriverJobCard({ job }: { job: Job }) {
           <div className="font-heading text-[22px] font-extrabold leading-none text-green-deep">
             {peso(job.fee)}
           </div>
-          <div className="text-[11.5px] font-medium text-muted">kita</div>
+          <div className="text-[11.5px] font-medium text-muted">{t('kita', 'earn')}</div>
         </div>
       </div>
 
@@ -47,7 +49,7 @@ export default function DriverJobCard({ job }: { job: Job }) {
           {job.zone}
         </span>
         <span className="ml-auto flex items-center gap-0.5 text-[13px] font-bold text-green">
-          Tingnan <ChevronRight className="size-4" strokeWidth={2.6} />
+          {t('Tingnan', 'View')} <ChevronRight className="size-4" strokeWidth={2.6} />
         </span>
       </div>
     </Link>

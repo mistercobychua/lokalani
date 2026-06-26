@@ -7,34 +7,36 @@ import PrimaryButton from '../../components/PrimaryButton'
 import RouteMap from '../../components/RouteMap'
 import { jobById } from '../../data/jobs'
 import { useApp } from '../../lib/AppContext'
+import { useT } from '../../lib/i18n'
 import { peso } from '../../lib/format'
 
 export default function JobDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { acceptJob, showToast } = useApp()
+  const t = useT()
   const job = id ? jobById(id) : undefined
 
   if (!job) {
     return (
-      <ScreenShell appBar={<AppBar title="Hindi nahanap" role="driver" helpKey="driver-detail" backTo="/driver" showSwitch={false} />}>
-        <div className="p-6 text-center text-muted">Wala ang job na ito.</div>
+      <ScreenShell appBar={<AppBar title={t('Hindi nahanap', 'Not found')} role="driver" helpKey="driver-detail" backTo="/driver" showSwitch={false} />}>
+        <div className="p-6 text-center text-muted">{t('Wala ang job na ito.', 'This job isn’t available.')}</div>
       </ScreenShell>
     )
   }
 
   const accept = () => {
     acceptJob(job.id)
-    showToast(`Tinanggap! ${peso(job.fee)} kita.`)
+    showToast(t(`Tinanggap! ${peso(job.fee)} kita.`, `Accepted! Earn ${peso(job.fee)}.`))
     navigate('/driver/active')
   }
 
   return (
     <ScreenShell
-      appBar={<AppBar title="Detalye ng Job" role="driver" helpKey="driver-detail" backTo="/driver" showSwitch={false} subtitle={job.zone} />}
+      appBar={<AppBar title={t('Detalye ng Job', 'Job details')} role="driver" helpKey="driver-detail" backTo="/driver" showSwitch={false} subtitle={job.zone} />}
       sticky={
         <StickyBar>
-          <PrimaryButton label={`Accept Job — ${peso(job.fee)} kita`} sub={`${job.dropCount} drops • ${job.distanceKm} km`} icon={Check} onClick={accept} />
+          <PrimaryButton label={`Accept Job — ${peso(job.fee)} ${t('kita', 'earn')}`} sub={`${job.dropCount} drops • ${job.distanceKm} km`} icon={Check} onClick={accept} />
         </StickyBar>
       }
     >
@@ -66,7 +68,7 @@ export default function JobDetail() {
         </div>
 
         {/* Stops */}
-        <h2 className="mb-2 mt-5 font-heading text-[15px] font-extrabold text-green-deep">Mga hihintuan</h2>
+        <h2 className="mb-2 mt-5 font-heading text-[15px] font-extrabold text-green-deep">{t('Mga hihintuan', 'Stops')}</h2>
         <ol className="overflow-hidden rounded-card border border-border bg-white shadow-card">
           {job.stops.map((s, i) => (
             <li key={s.id} className="flex items-center gap-3 border-b border-border px-3.5 py-3 last:border-0">
@@ -87,7 +89,7 @@ export default function JobDetail() {
         </ol>
 
         {/* Fee breakdown */}
-        <h2 className="mb-2 mt-5 font-heading text-[15px] font-extrabold text-green-deep">Breakdown ng bayad</h2>
+        <h2 className="mb-2 mt-5 font-heading text-[15px] font-extrabold text-green-deep">{t('Breakdown ng bayad', 'Fee breakdown')}</h2>
         <div className="rounded-card border border-border bg-white p-4 shadow-card">
           <div className="flex items-center justify-between text-[14px]">
             <span className="flex items-center gap-2 text-muted">
@@ -97,7 +99,7 @@ export default function JobDetail() {
             <span className="font-heading text-[20px] font-extrabold text-green-deep">{peso(job.fee)}</span>
           </div>
           <p className="mt-2 text-[12.5px] text-muted">
-            Pooled / batch route — mas marami ang stops, mas malaki ang kita kada biyahe.
+            {t('Pooled / batch route — mas marami ang stops, mas malaki ang kita kada biyahe.', 'Pooled / batch route — more stops, more earnings per trip.')}
           </p>
         </div>
 
@@ -108,7 +110,7 @@ export default function JobDetail() {
             <div>
               <p className="font-heading text-[14px] font-extrabold text-amber-deep">Hub-and-spoke relay</p>
               <p className="mt-0.5 text-[13.5px] leading-snug text-ink">
-                Cross-barangay ang ruta — i-drop sa <b>{job.relay}</b>. Doon ipi-pickup ng kasamang driver.
+                {t('Cross-barangay ang ruta — i-drop sa', 'Cross-barangay route — drop at')} <b>{job.relay}</b>. {t('Doon ipi-pickup ng kasamang driver.', 'A partner driver picks it up there.')}
               </p>
             </div>
           </div>

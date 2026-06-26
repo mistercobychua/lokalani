@@ -4,8 +4,10 @@ import ScreenShell from '../../components/ScreenShell'
 import SectionHeading from '../../components/SectionHeading'
 import RouteMap from '../../components/RouteMap'
 import { driver } from '../../data/personas'
+import { useT } from '../../lib/i18n'
 
 export default function Zone() {
+  const t = useT()
   return (
     <ScreenShell appBar={<AppBar title="Zone" role="driver" helpKey="driver-zone" />}>
       <div className="px-4 pb-6 pt-4">
@@ -17,13 +19,15 @@ export default function Zone() {
             <p className="text-[13px] text-muted">Tricycle {driver.tricycleNo}</p>
           </div>
           <span className="inline-flex items-center gap-1 rounded-full bg-green-tint px-2.5 py-1 text-[12px] font-bold text-green-deep">
-            <BadgeCheck className="size-[15px]" strokeWidth={2.5} /> Verified
+            <BadgeCheck className="size-[15px]" strokeWidth={2.5} /> {t('Verified', 'Verified')}
           </span>
         </div>
 
         {/* Authorized zone */}
         <div className="mt-5">
-          <SectionHeading hint="Dito ka lang tatanggap ng deliveries (route-compliant)">Authorized service zone</SectionHeading>
+          <SectionHeading hint={t('Dito ka lang tatanggap ng deliveries (route-compliant)', 'You only take deliveries here (route-compliant)')}>
+            {t('Authorized service zone', 'Authorized service zone')}
+          </SectionHeading>
           <div className="rounded-card border border-border bg-white p-4 shadow-card">
             <div className="flex flex-wrap gap-2">
               {driver.zone.map((z) => (
@@ -47,14 +51,16 @@ export default function Zone() {
 
         {/* Capacity cap */}
         <div className="mt-5">
-          <SectionHeading hint="Patas na hatian ng trabaho kada window">Capacity status</SectionHeading>
+          <SectionHeading hint={t('Patas na hatian ng trabaho kada window', 'Fair share of work each window')}>
+            {t('Capacity status', 'Capacity status')}
+          </SectionHeading>
           <div className="rounded-card border border-amber/40 bg-amber-tint p-4">
             <div className="flex items-center gap-2 text-amber-deep">
               <Users className="size-[18px]" strokeWidth={2.4} />
-              <span className="text-[13px] font-bold uppercase tracking-wide">Active drivers ngayong window</span>
+              <span className="text-[13px] font-bold uppercase tracking-wide">{t('Active drivers ngayong window', 'Active drivers this window')}</span>
             </div>
             <p className="mt-2 font-heading text-[18px] font-extrabold text-ink">
-              Ika-<span className="text-green-deep">1</span> ka sa <span className="text-green-deep">5</span> driver
+              {t('Ika-', 'No. ')}<span className="text-green-deep">1</span> {t('ka sa', 'of')} <span className="text-green-deep">5</span> {t('driver', 'drivers')}
             </p>
             <div className="mt-2 flex gap-1.5">
               {[0, 1, 2, 3, 4].map((i) => (
@@ -62,7 +68,7 @@ export default function Zone() {
               ))}
             </div>
             <p className="mt-2 text-[13px] leading-snug text-ink">
-              May cap na 5 driver kada zone bawat window para sapat ang kita ng bawat isa.
+              {t('May cap na 5 driver kada zone bawat window para sapat ang kita ng bawat isa.', 'A cap of 5 drivers per zone each window keeps everyone’s earnings fair.')}
             </p>
           </div>
         </div>
@@ -73,7 +79,7 @@ export default function Zone() {
           <div>
             <p className="font-heading text-[14px] font-extrabold text-green-deep">Hub-and-spoke relay</p>
             <p className="mt-0.5 text-[13.5px] leading-snug text-ink">
-              Para sa cross-barangay: i-drop sa <b>Project 4 Basketball Court — Barangay Border Drop-point</b>.
+              {t('Para sa cross-barangay: i-drop sa', 'For cross-barangay: drop at')} <b>Project 4 Basketball Court — Barangay Border Drop-point</b>.
             </p>
           </div>
         </div>
