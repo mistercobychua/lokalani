@@ -1,0 +1,200 @@
+@import 'tailwindcss';
+
+/* ============================================================
+   LokalANI design system — calm, green-led, relaxing.
+   Brand palette per build brief, AA-verified for text use.
+   ============================================================ */
+@theme {
+  /* Type */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-heading: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand — green-forward */
+  --color-green: #4a7c59; /* PRIMARY */
+  --color-green-dark: #34573f;
+  --color-green-deep: #294433;
+  --color-sage: #8fb39b; /* decorative fills only — never small text */
+  --color-green-tint: #eaf2ec;
+
+  /* Warm accents (calibrated for AA text use) */
+  --color-amber: #d99b45; /* fills + dark text on top */
+  --color-amber-deep: #8a5a0f; /* amber-coloured text on light */
+  --color-amber-tint: #f6e8d2;
+  --color-danger: #c85c4e; /* soft terracotta — last-call */
+  --color-danger-deep: #b0463a; /* danger text / small white-on-danger */
+  --color-danger-tint: #f7e2de;
+  --color-clay: #a65a4f;
+
+  /* Neutrals */
+  --color-surface: #f4f6f1;
+  --color-ink: #23241f;
+  --color-muted: #6b7268;
+  --color-border: #e2e6dd;
+  --color-white: #ffffff;
+
+  /* Radii */
+  --radius-card: 1.25rem;
+  --radius-xl2: 1.75rem;
+
+  /* Shadows — soft, low-glare */
+  --shadow-card: 0 1px 2px rgba(35, 36, 31, 0.04), 0 6px 16px -8px rgba(41, 68, 51, 0.14);
+  --shadow-pop: 0 8px 30px -10px rgba(41, 68, 51, 0.28);
+  --shadow-frame: 0 40px 80px -32px rgba(41, 68, 51, 0.45), 0 0 0 1px rgba(35, 36, 31, 0.04);
+
+  /* Motion */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---- Base ---- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    /* Calm page backdrop behind the phone frame on desktop */
+    background:
+      radial-gradient(120% 80% at 50% -10%, #dfeadf 0%, transparent 55%),
+      linear-gradient(180deg, #e7eee6 0%, #d9e3d8 100%);
+    background-attachment: fixed;
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  button {
+    font-family: inherit;
+  }
+
+  /* Visible, on-brand focus ring for keyboard users */
+  :focus-visible {
+    outline: 2px solid var(--color-green);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  /* Hide scrollbars inside the phone frame, keep scrolling */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ---- Semantic z-index scale ---- */
+@layer utilities {
+  .z-nav { z-index: 20; }
+  .z-sticky { z-index: 30; }
+  .z-backdrop { z-index: 40; }
+  .z-sheet { z-index: 50; }
+  .z-coachmark { z-index: 60; }
+  .z-toast { z-index: 70; }
+
+  .tap-target {
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  /* AA-safe translucent surface on green backgrounds:
+     darkens (not lightens) the green so white text keeps ≥4.5:1. */
+  .glass-green {
+    background-color: rgba(20, 33, 25, 0.3);
+  }
+  .glass-green-strong {
+    background-color: rgba(20, 33, 25, 0.42);
+  }
+}
+
+/* ============================================================
+   Motion — intentional, ease-out, reduced-motion safe
+   ============================================================ */
+@keyframes la-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes la-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes la-sheet-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@keyframes la-pop-in {
+  0% { opacity: 0; transform: scale(0.9); }
+  60% { opacity: 1; }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes la-shimmer {
+  100% { transform: translateX(100%); }
+}
+@keyframes la-mic-ring {
+  0% { transform: scale(1); opacity: 0.55; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
+@keyframes la-pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+@keyframes la-tick {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.14); }
+  100% { transform: scale(1); }
+}
+
+.anim-fade-up { animation: la-fade-up 0.5s var(--ease-out-quart) both; }
+.anim-fade { animation: la-fade 0.4s var(--ease-out-quart) both; }
+.anim-sheet { animation: la-sheet-up 0.36s var(--ease-out-expo) both; }
+.anim-backdrop { animation: la-fade 0.28s ease-out both; }
+.anim-pop { animation: la-pop-in 0.42s var(--ease-out-expo) both; }
+.anim-pulse-soft { animation: la-pulse-soft 1.6s ease-in-out infinite; }
+.anim-tick { animation: la-tick 0.4s var(--ease-out-quart); }
+
+/* Staggered list entrances (set --i on each child) */
+.stagger > * {
+  animation: la-fade-up 0.5s var(--ease-out-quart) both;
+  animation-delay: calc(var(--i, 0) * 55ms);
+}
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-green-tint);
+}
+.shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+  animation: la-shimmer 1.4s infinite;
+}
+
+/* Mic listening rings */
+.mic-ring {
+  animation: la-mic-ring 1.8s var(--ease-out-quart) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .shimmer::after { display: none; }
+}
