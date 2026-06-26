@@ -13,15 +13,16 @@ import SuccessSheet from '../../components/SuccessSheet'
 import { listingById } from '../../data/listings'
 import { vendorById, wholesaler } from '../../data/personas'
 import { useApp } from '../../lib/AppContext'
+import { useT } from '../../lib/i18n'
 import { peso } from '../../lib/format'
-import type { OrderAddon } from '../../types'
 
-const ADDON: OrderAddon = { label: '10kg bigas — Aling Nena Wholesale', price: 520 }
+const ADDON_PRICE = 520
 
 export default function ListingDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { reserve } = useApp()
+  const t = useT()
   const listing = id ? listingById(id) : undefined
 
   const [qty, setQty] = useState(3)
@@ -31,14 +32,15 @@ export default function ListingDetail() {
 
   if (!listing) {
     return (
-      <ScreenShell appBar={<AppBar title="Hindi nahanap" role="buyer" helpKey="buyer-detail" backTo="/buyer" showSwitch={false} />}>
-        <div className="p-6 text-center text-muted">Wala ang alok na ito. Bumalik sa Palengke.</div>
+      <ScreenShell appBar={<AppBar title={t('Hindi nahanap', 'Not found')} role="buyer" helpKey="buyer-detail" backTo="/buyer" showSwitch={false} />}>
+        <div className="p-6 text-center text-muted">{t('Wala ang alok na ito. Bumalik sa Palengke.', 'This offer isn’t available. Go back to the marketplace.')}</div>
       </ScreenShell>
     )
   }
 
   const v = vendorById(listing.vendorId)
-  const addons = addon ? [ADDON] : []
+  const addonItem = { label: t('10kg bigas — Aling Nena Wholesale', '10kg rice — Aling Nena Wholesale'), price: ADDON_PRICE }
+  const addons = addon ? [addonItem] : []
   const subtotal = listing.price * qty + addons.reduce((s, a) => s + a.price, 0)
   const saved = (listing.origPrice - listing.price) * qty
 
@@ -55,17 +57,17 @@ export default function ListingDetail() {
         <StickyBar>
           <div className="mb-2.5 flex items-end justify-between">
             <div>
-              <p className="text-[12.5px] font-medium text-muted">Kabuuang babayaran</p>
+              <p className="text-[12.5px] font-medium text-muted">{t('Kabuuang babayaran', 'Total to pay')}</p>
               <p className="font-heading text-[26px] font-extrabold leading-none text-green-deep">{peso(subtotal)}</p>
             </div>
             <p className="text-right text-[12.5px] font-semibold text-green">
-              Nakakatipid ka ng {peso(saved)}
-              <span className="block text-[11px] font-medium text-muted">vs. dating presyo</span>
+              {t('Nakakatipid ka ng', 'You save')} {peso(saved)}
+              <span className="block text-[11px] font-medium text-muted">{t('vs. dating presyo', 'vs. original price')}</span>
             </p>
           </div>
           <PrimaryButton
-            label="I-reserve & Pay"
-            sub="makukuha mo agad — ihahatid sa’yo"
+            label={t('I-reserve & Pay', 'Reserve & Pay')}
+            sub={t('makukuha mo agad — ihahatid sa’yo', 'get it right away — delivered to you')}
             icon={Check}
             onClick={() => setConfirm(true)}
           />
@@ -86,7 +88,7 @@ export default function ListingDetail() {
             <h1 className="font-heading text-[24px] font-extrabold leading-tight text-ink">
               {listing.item} <span className="text-[15px] font-semibold text-muted">({listing.itemEn})</span>
             </h1>
-            <p className="mt-0.5 text-[14px] text-muted">{listing.qtyKg}kg available • mabilis maubos</p>
+            <p className="mt-0.5 text-[14px] text-muted">{listing.qtyKg}kg available • {t('mabilis maubos', 'sells out fast')}</p>
           </div>
         </div>
 
@@ -110,7 +112,7 @@ export default function ListingDetail() {
         <div className="rounded-2xl border border-border bg-white p-3.5 shadow-card">
           <div className="mb-2 flex items-center gap-2">
             <ShieldCheck className="size-[18px] text-green" strokeWidth={2.4} />
-            <h2 className="font-heading text-[15px] font-extrabold text-green-deep">AI freshness window</h2>
+            <h2 className="font-heading text-[15px] font-extrabold text-green-deep">{t('AI freshness window', 'AI freshness window')}</h2>
           </div>
           <FreshnessBadge pct={listing.freshnessPct} freshUntil={listing.freshUntil} showMeter />
         </div>
@@ -122,8 +124,8 @@ export default function ListingDetail() {
       <div className="mt-4 px-4">
         <div className="flex items-center justify-between rounded-2xl border border-border bg-white p-3.5 shadow-card">
           <div>
-            <p className="font-heading text-[15px] font-bold text-ink">Ilang kilo?</p>
-            <p className="text-[13px] text-muted">{peso(listing.price)}/kg • hanggang {listing.qtyKg}kg</p>
+            <p className="font-heading text-[15px] font-bold text-ink">{t('Ilang kilo?', 'How many kilos?')}</p>
+            <p className="text-[13px] text-muted">{peso(listing.price)}/kg • {t('hanggang', 'up to')} {listing.qtyKg}kg</p>
           </div>
           <QtyInline qty={qty} max={listing.qtyKg} onChange={setQty} />
         </div>
@@ -142,12 +144,12 @@ export default function ListingDetail() {
           <span className="grid size-11 place-items-center rounded-xl bg-white text-[22px] shadow-card">🍚</span>
           <span className="min-w-0 flex-1">
             <span className="block font-heading text-[14.5px] font-bold text-ink">
-              Magdagdag ng 10kg bigas?
+              {t('Magdagdag ng 10kg bigas?', 'Add 10kg of rice?')}
             </span>
-            <span className="block text-[13px] text-muted">Mula {wholesaler.name} • isang delivery na lang</span>
+            <span className="block text-[13px] text-muted">{t('Mula', 'From')} {wholesaler.name} • {t('isang delivery na lang', 'one delivery only')}</span>
           </span>
           <span className="text-right">
-            <span className="block font-heading text-[15px] font-extrabold text-green-deep">+{peso(ADDON.price)}</span>
+            <span className="block font-heading text-[15px] font-extrabold text-green-deep">+{peso(ADDON_PRICE)}</span>
             <span
               className={`mt-1 inline-flex size-6 items-center justify-center rounded-lg ${
                 addon ? 'bg-green text-white' : 'border border-border text-muted'
@@ -164,7 +166,8 @@ export default function ListingDetail() {
         <div className="flex items-center gap-2.5 rounded-2xl bg-green-tint px-3.5 py-3">
           <Leaf className="size-5 shrink-0 text-green" strokeWidth={2.4} />
           <p className="text-[14px] leading-snug text-green-deep">
-            Nakakatipid ng <span className="font-bold">{(listing.co2Kg * qty).toFixed(1)} kg CO₂</span> kapag na-rescue mo ang surplus na ito.
+            {t('Nakakatipid ng', 'You save')} <span className="font-bold">{(listing.co2Kg * qty).toFixed(1)} kg CO₂</span>{' '}
+            {t('kapag na-rescue mo ang surplus na ito.', 'when you rescue this surplus.')}
           </p>
         </div>
       </div>
@@ -173,45 +176,45 @@ export default function ListingDetail() {
       <BottomSheet
         open={confirm}
         onClose={() => setConfirm(false)}
-        title="Kumpirmahin ang reserba"
+        title={t('Kumpirmahin ang reserba', 'Confirm reservation')}
         footer={
           <div className="space-y-2">
-            <PrimaryButton label={`I-reserve & Pay — ${peso(subtotal)}`} sub="makukuha mo agad" icon={Check} onClick={placeReserve} />
+            <PrimaryButton label={`${t('I-reserve & Pay', 'Reserve & Pay')} — ${peso(subtotal + 25)}`} sub={t('makukuha mo agad', 'get it right away')} icon={Check} onClick={placeReserve} />
             <button
               type="button"
               onClick={() => setConfirm(false)}
               className="tap-target w-full rounded-2xl border border-border bg-white px-5 py-3 text-[15px] font-semibold text-muted transition hover:bg-surface active:scale-[0.98]"
             >
-              Kanselahin muna
+              {t('Kanselahin muna', 'Cancel for now')}
             </button>
           </div>
         }
       >
         <ul className="space-y-2 pb-1 text-[14.5px]">
           <Row label={`${listing.item} (${qty}kg)`} value={peso(listing.price * qty)} />
-          {addon && <Row label="10kg bigas (add-on)" value={peso(ADDON.price)} />}
-          <Row label="Delivery (batch, ₱25/stop)" value={peso(25)} />
+          {addon && <Row label={t('10kg bigas (add-on)', '10kg rice (add-on)')} value={peso(ADDON_PRICE)} />}
+          <Row label={t('Delivery (batch, ₱25/stop)', 'Delivery (batch, ₱25/stop)')} value={peso(25)} />
           <li className="flex items-center justify-between border-t border-border pt-2 font-bold text-ink">
-            <span>Kabuuan</span>
+            <span>{t('Kabuuan', 'Total')}</span>
             <span className="font-heading text-[18px] text-green-deep">{peso(subtotal + 25)}</span>
           </li>
         </ul>
         <p className="mt-2 flex items-center gap-1.5 text-[13px] text-muted">
-          <Truck className="size-4" strokeWidth={2.3} /> Ihahatid sa loob ng 2 km bago mag-{listing.freshUntil}.
+          <Truck className="size-4" strokeWidth={2.3} /> {t('Ihahatid sa loob ng 2 km bago mag-', 'Delivered within 2 km before')}{listing.freshUntil}.
         </p>
       </BottomSheet>
 
       <SuccessSheet
         open={done}
         onClose={() => setDone(false)}
-        title="Naka-reserve na! 🎉"
+        title={t('Naka-reserve na! 🎉', 'Reserved! 🎉')}
         steps={[
-          { emoji: '🧑‍🌾', text: <><b>{v.name}</b> ihahanda ang {qty}kg {listing.item} mo.</> },
-          { emoji: '🛺', text: <>I-ha-hatid ni <b>Mang Berto</b> bago mag-{listing.freshUntil}.</> },
-          { emoji: '🔔', text: <>Subaybayan ang status sa <b>Orders</b> — ETA, driver, at mapa.</> },
+          { emoji: '🧑‍🌾', text: <><b>{v.name}</b> {t('ihahanda ang', 'will prepare your')} {qty}kg {listing.item}{t(' mo.', '.')}</> },
+          { emoji: '🛺', text: <>{t('I-ha-hatid ni', 'Delivered by')} <b>Mang Berto</b> {t('bago mag-', 'before')}{listing.freshUntil}.</> },
+          { emoji: '🔔', text: <>{t('Subaybayan ang status sa', 'Track the status in')} <b>{t('Orders', 'Orders')}</b> — ETA, driver, {t('at mapa.', 'and map.')}</> },
         ]}
-        primary={{ label: 'Tingnan ang order ko', onClick: () => navigate('/buyer/orders') }}
-        secondary={{ label: 'Bumalik sa Palengke', onClick: () => navigate('/buyer') }}
+        primary={{ label: t('Tingnan ang order ko', 'View my order'), onClick: () => navigate('/buyer/orders') }}
+        secondary={{ label: t('Bumalik sa Palengke', 'Back to marketplace'), onClick: () => navigate('/buyer') }}
       />
     </ScreenShell>
   )
@@ -233,7 +236,7 @@ function QtyInline({ qty, max, onChange }: { qty: number; max: number; onChange:
         type="button"
         onClick={() => onChange(Math.max(1, qty - 1))}
         disabled={qty <= 1}
-        aria-label="Bawasan"
+        aria-label="−"
         className="tap-target grid place-items-center rounded-lg bg-green-tint text-green-deep transition active:scale-95 disabled:opacity-40"
       >
         <span className="text-2xl leading-none">−</span>
@@ -243,7 +246,7 @@ function QtyInline({ qty, max, onChange }: { qty: number; max: number; onChange:
         type="button"
         onClick={() => onChange(Math.min(max, qty + 1))}
         disabled={qty >= max}
-        aria-label="Dagdagan"
+        aria-label="+"
         className="tap-target grid place-items-center rounded-lg bg-green text-white transition active:scale-95 disabled:opacity-40"
       >
         <span className="text-2xl leading-none">+</span>

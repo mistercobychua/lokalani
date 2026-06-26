@@ -6,35 +6,35 @@ import RouteMap from '../../components/RouteMap'
 import EmptyState from '../../components/EmptyState'
 import SectionHeading from '../../components/SectionHeading'
 import { useApp } from '../../lib/AppContext'
+import { useT } from '../../lib/i18n'
 import { peso } from '../../lib/format'
 import type { Order, OrderStatus } from '../../types'
 
-const trackerLabels: { status: OrderStatus; label: string }[] = [
-  { status: 'reserved', label: 'Naka-reserve' },
-  { status: 'picking', label: 'Kinukuha' },
-  { status: 'on_the_way', label: 'Padating' },
-  { status: 'delivered', label: 'Dumating' },
-]
-
 export default function Orders() {
   const { orders } = useApp()
+  const t = useT()
   const active = orders.filter((o) => o.status !== 'delivered')
   const past = orders.filter((o) => o.status === 'delivered')
 
   return (
-    <ScreenShell appBar={<AppBar title="Orders" role="buyer" helpKey="buyer-orders" />}>
+    <ScreenShell appBar={<AppBar title={t('Orders', 'Orders')} role="buyer" helpKey="buyer-orders" />}>
       <div className="px-4 pb-6 pt-4">
         {active.length === 0 && past.length === 0 ? (
           <EmptyState
             emoji="🧾"
-            title="Wala ka pang order"
-            body="Pumili ng surplus sa Palengke at i-reserve — lalabas dito ang tracking ng order mo."
+            title={t('Wala ka pang order', 'No orders yet')}
+            body={t(
+              'Pumili ng surplus sa Palengke at i-reserve — lalabas dito ang tracking ng order mo.',
+              'Pick surplus in the marketplace and reserve — your order tracking shows up here.',
+            )}
           />
         ) : (
           <>
             {active.length > 0 && (
               <>
-                <SectionHeading hint="Live na update ng order mo">Kasalukuyang order</SectionHeading>
+                <SectionHeading hint={t('Live na update ng order mo', 'Live updates on your order')}>
+                  {t('Kasalukuyang order', 'Current order')}
+                </SectionHeading>
                 <div className="space-y-4">
                   {active.map((o) => (
                     <ActiveOrder key={o.id} order={o} />
@@ -45,7 +45,7 @@ export default function Orders() {
 
             {past.length > 0 && (
               <div className="mt-6">
-                <SectionHeading>Mga nakaraang order</SectionHeading>
+                <SectionHeading>{t('Mga nakaraang order', 'Past orders')}</SectionHeading>
                 <div className="space-y-2.5">
                   {past.map((o) => (
                     <div key={o.id} className="flex items-center gap-3 rounded-2xl border border-border bg-white p-3 shadow-card">
@@ -54,7 +54,7 @@ export default function Orders() {
                         <p className="font-heading text-[14.5px] font-bold text-ink">
                           {o.item} • {o.qtyKg}kg
                         </p>
-                        <p className="text-[12.5px] text-muted">{o.placedLabel} • {o.vendorName}</p>
+                        <p className="text-[12.5px] text-muted">{placed(o.placedLabel, t)} • {o.vendorName}</p>
                       </div>
                       <div className="text-right">
                         <p className="font-heading text-[15px] font-extrabold text-green-deep">{peso(o.total)}</p>
@@ -72,8 +72,21 @@ export default function Orders() {
   )
 }
 
+/** Translate the small set of generated placed-at labels. */
+function placed(label: string, t: (f: string, e: string) => string) {
+  if (label === 'Ngayon lang') return t('Ngayon lang', 'Just now')
+  return label.replace('Kahapon', t('Kahapon', 'Yesterday'))
+}
+
 function ActiveOrder({ order }: { order: Order }) {
+  const t = useT()
   const currentIdx = statusOrder.indexOf(order.status)
+  const trackerLabels: { status: OrderStatus; label: string }[] = [
+    { status: 'reserved', label: t('Naka-reserve', 'Reserved') },
+    { status: 'picking', label: t('Kinukuha', 'Picking up') },
+    { status: 'on_the_way', label: t('Padating', 'On the way') },
+    { status: 'delivered', label: t('Dumating', 'Delivered') },
+  ]
   return (
     <div className="overflow-hidden rounded-card border border-border bg-white shadow-card">
       {/* Summary */}
@@ -87,7 +100,7 @@ function ActiveOrder({ order }: { order: Order }) {
         </div>
         <div className="text-right">
           <p className="font-heading text-[18px] font-extrabold text-green-deep">{peso(order.total)}</p>
-          <p className="text-[11.5px] text-muted">kabuuan</p>
+          <p className="text-[11.5px] text-muted">{t('kabuuan', 'total')}</p>
         </div>
       </div>
 
@@ -97,11 +110,11 @@ function ActiveOrder({ order }: { order: Order }) {
           <StatusPill status={order.status} />
         </div>
         <div className="flex items-start justify-between">
-          {trackerLabels.map((t, i) => {
+          {trackerLabels.map((step, i) => {
             const done = i <= currentIdx
             const current = i === currentIdx
             return (
-              <div key={t.status} className="relative flex flex-1 flex-col items-center">
+              <div key={step.status} className="relative flex flex-1 flex-col items-center">
                 {i < trackerLabels.length - 1 && (
                   <span
                     className={`absolute left-1/2 top-3 h-0.5 w-full ${i < currentIdx ? 'bg-green' : 'bg-border'}`}
@@ -115,7 +128,7 @@ function ActiveOrder({ order }: { order: Order }) {
                   <Check className="size-3.5" strokeWidth={3} />
                 </span>
                 <span className={`mt-1.5 text-center text-[11px] leading-tight ${done ? 'font-bold text-green-deep' : 'text-muted'}`}>
-                  {t.label}
+                  {step.label}
                 </span>
               </div>
             )
@@ -129,7 +142,8 @@ function ActiveOrder({ order }: { order: Order }) {
           <div className="flex items-center gap-2.5 rounded-2xl bg-amber-tint px-3 py-2.5">
             <Users className="size-[18px] shrink-0 text-amber-deep" strokeWidth={2.4} />
             <p className="text-[13px] leading-snug text-ink">
-              <b>Batch delivery</b> — naka-bundle sa {order.batchCount} kalapit na carinderia, {peso(order.deliveryFee)} delivery lang.
+              <b>{t('Batch delivery', 'Batch delivery')}</b> — {t('naka-bundle sa', 'bundled with')} {order.batchCount}{' '}
+              {t('kalapit na carinderia,', 'nearby eateries,')} {peso(order.deliveryFee)} {t('delivery lang.', 'delivery only.')}
             </p>
           </div>
         )}
@@ -152,14 +166,14 @@ function ActiveOrder({ order }: { order: Order }) {
         <RouteMap
           stops={[
             { label: order.vendorName, type: 'pickup' },
-            { label: 'Ikaw', type: 'drop' },
+            { label: t('Ikaw', 'You'), type: 'drop' },
           ]}
           showRing
         />
 
         <p className="flex items-center justify-center gap-1.5 pt-1 text-[12.5px] text-muted">
           <Leaf className="size-4 text-green" strokeWidth={2.3} />
-          Nakaiwas ng {order.co2Kg.toFixed(1)} kg CO₂ sa order na ito.
+          {t('Nakaiwas ng', 'Avoided')} {order.co2Kg.toFixed(1)} kg CO₂ {t('sa order na ito.', 'on this order.')}
         </p>
       </div>
     </div>
