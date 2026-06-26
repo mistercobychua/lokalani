@@ -1,5 +1,7 @@
 export type Role = 'buyer' | 'vendor' | 'driver'
 
+export type Lang = 'fil' | 'en'
+
 export type Category = 'gulay' | 'karne' | 'isda' | 'prutas'
 
 export interface Vendor {

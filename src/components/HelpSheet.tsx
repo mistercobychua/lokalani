@@ -1,9 +1,10 @@
-import { Info, ListChecks, ArrowLeftRight, RotateCcw } from 'lucide-react'
+import { Info, ListChecks, ArrowLeftRight, RotateCcw, Languages } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../lib/AppContext'
 import { helpContent } from '../data/help'
 import type { Role } from '../types'
 import BottomSheet from './BottomSheet'
+import LanguageToggle from './LanguageToggle'
 
 /** Persistent "?" help — plain-Taglish "Ano ito?" + "Paano gamitin?" per screen. */
 export default function HelpSheet({ role }: { role: Role }) {
@@ -40,7 +41,15 @@ export default function HelpSheet({ role }: { role: Role }) {
             </ol>
           </section>
 
-          <div className="mt-4 grid grid-cols-2 gap-2">
+          <div className="mt-4 flex items-center justify-between rounded-2xl border border-border bg-surface px-3.5 py-3">
+            <span className="flex items-center gap-2 text-[14.5px] font-semibold text-green-deep">
+              <Languages className="size-[18px]" strokeWidth={2.3} />
+              Wika / Language
+            </span>
+            <LanguageToggle tone="light" />
+          </div>
+
+          <div className="mt-3 grid grid-cols-2 gap-2">
             <button
               type="button"
               onClick={() => {

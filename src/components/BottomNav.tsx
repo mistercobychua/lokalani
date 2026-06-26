@@ -1,10 +1,12 @@
 import { NavLink } from 'react-router-dom'
 import type { Role } from '../types'
 import { roleMeta } from '../lib/roles'
+import { useApp } from '../lib/AppContext'
 
 /** Role-specific bottom tabs — icon + text label, always. */
 export default function BottomNav({ role }: { role: Role }) {
   const { nav } = roleMeta[role]
+  const { lang } = useApp()
   return (
     <nav
       className="z-nav shrink-0 border-t border-border bg-white/95 px-1.5 pt-1.5 backdrop-blur"
@@ -32,7 +34,7 @@ export default function BottomNav({ role }: { role: Role }) {
                     />
                   </span>
                   <span className={`text-[10.5px] leading-none ${isActive ? 'font-bold' : 'font-medium'}`}>
-                    {item.label}
+                    {lang === 'en' ? item.labelEn : item.label}
                   </span>
                 </>
               )}

@@ -8,7 +8,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import type { Listing, Order, OrderAddon, Role } from '../types'
+import type { Lang, Listing, Order, OrderAddon, Role } from '../types'
 import { seedOrders } from '../data/orders'
 import { vendorById } from '../data/personas'
 import { driver as driverPersona } from '../data/personas'
@@ -75,6 +75,11 @@ interface AppContextValue {
   demoMs: number
   demoBaseMs: number
 
+  // Language
+  lang: Lang
+  setLang: (l: Lang) => void
+  toggleLang: () => void
+
   // Coachmarks (first-run per role)
   coachSeen: Record<Role, boolean>
   markCoachSeen: (r: Role) => void
@@ -131,6 +136,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const id = window.setInterval(tick, 1000)
     return () => window.clearInterval(id)
   }, [])
+
+  // Language
+  const [lang, setLang] = useState<Lang>('fil')
+  const toggleLang = useCallback(() => setLang((l) => (l === 'fil' ? 'en' : 'fil')), [])
 
   // Coachmarks
   const [coachSeen, setCoachSeen] = useState<Record<Role, boolean>>({
@@ -244,6 +253,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       now: new Date(demoMs),
       demoMs,
       demoBaseMs: baseRef.current.demoBaseMs,
+      lang,
+      setLang,
+      toggleLang,
       coachSeen,
       markCoachSeen,
       replayCoach,
@@ -267,6 +279,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }),
     [
       demoMs,
+      lang,
+      toggleLang,
       coachSeen,
       markCoachSeen,
       replayCoach,

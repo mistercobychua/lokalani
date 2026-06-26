@@ -1,8 +1,12 @@
 import { ChevronRight } from 'lucide-react'
 import type { RoleMeta } from '../lib/roles'
+import { useApp } from '../lib/AppContext'
 
 export default function RoleCard({ meta, onClick }: { meta: RoleMeta; onClick: () => void }) {
   const Icon = meta.icon
+  const { lang } = useApp()
+  const who = lang === 'en' ? meta.whoEn : meta.who
+  const benefit = lang === 'en' ? meta.benefitEn : meta.benefit
   return (
     <button
       type="button"
@@ -17,9 +21,9 @@ export default function RoleCard({ meta, onClick }: { meta: RoleMeta; onClick: (
       </span>
       <span className="min-w-0 flex-1">
         <span className="block font-heading text-[18px] font-extrabold leading-tight text-green-deep">
-          {meta.who}
+          {who}
         </span>
-        <span className="mt-0.5 block text-[14px] leading-snug text-muted">{meta.benefit}</span>
+        <span className="mt-0.5 block text-[14px] leading-snug text-muted">{benefit}</span>
       </span>
       <span className="grid size-9 shrink-0 place-items-center rounded-full bg-green text-white transition group-active:translate-x-0.5">
         <ChevronRight className="size-5" strokeWidth={2.6} />
