@@ -7,6 +7,7 @@ import StickyBar from '../../components/StickyBar'
 import PrimaryButton from '../../components/PrimaryButton'
 import QtyStepper from '../../components/QtyStepper'
 import { useApp } from '../../lib/AppContext'
+import { useT } from '../../lib/i18n'
 import { vendor } from '../../data/personas'
 import { peso } from '../../lib/format'
 
@@ -21,6 +22,7 @@ const TIMES = ['4:00 PM', '5:00 PM', '5:30 PM']
 export default function ForwardList() {
   const navigate = useNavigate()
   const { addVendorPost, showToast } = useApp()
+  const t = useT()
   const [itemIdx, setItemIdx] = useState(0)
   const [qty, setQty] = useState(8)
   const [timeIdx, setTimeIdx] = useState(1)
@@ -41,7 +43,7 @@ export default function ForwardList() {
       dropTime: TIMES[timeIdx],
       forward: true,
     })
-    showToast(`Na-schedule! ${qty}kg ${sel.item} para sa ${TIMES[timeIdx]}.`)
+    showToast(t(`Na-schedule! ${qty}kg ${sel.item} para sa ${TIMES[timeIdx]}.`, `Scheduled! ${qty}kg ${sel.item} for ${TIMES[timeIdx]}.`))
     navigate('/vendor/listings')
   }
 
@@ -50,7 +52,7 @@ export default function ForwardList() {
       appBar={<AppBar title="Forward-List" role="vendor" helpKey="vendor-forward" backTo="/vendor" showSwitch={false} />}
       sticky={
         <StickyBar>
-          <PrimaryButton label="I-schedule" sub={`${qty}kg ${sel.item} • ${TIMES[timeIdx]}`} icon={CalendarClock} onClick={schedule} />
+          <PrimaryButton label={t('I-schedule', 'Schedule')} sub={`${qty}kg ${sel.item} • ${TIMES[timeIdx]}`} icon={CalendarClock} onClick={schedule} />
         </StickyBar>
       }
     >
@@ -58,12 +60,12 @@ export default function ForwardList() {
         <div className="mb-4 flex items-center gap-2.5 rounded-2xl bg-green-tint px-3.5 py-3">
           <CalendarClock className="size-5 shrink-0 text-green" strokeWidth={2.3} />
           <p className="text-[13.5px] leading-snug text-green-deep">
-            I-iskedyul ang surplus na <b>darating mamaya</b> — may reserba na agad ang mga suki bago pa maani.
+            {t('I-iskedyul ang surplus na', 'Schedule surplus that’s')} <b>{t('darating mamaya', 'coming later')}</b> — {t('may reserba na agad ang mga suki bago pa maani.', 'regulars can reserve it before it’s even harvested.')}
           </p>
         </div>
 
         {/* Item */}
-        <Label>Anong produkto?</Label>
+        <Label>{t('Anong produkto?', 'Which product?')}</Label>
         <div className="mb-4 grid grid-cols-4 gap-2">
           {ITEMS.map((it, i) => (
             <button
@@ -81,30 +83,30 @@ export default function ForwardList() {
         </div>
 
         {/* Qty */}
-        <Label>Tantyang dami</Label>
+        <Label>{t('Tantyang dami', 'Estimated quantity')}</Label>
         <div className="mb-4">
           <QtyStepper value={qty} min={1} max={30} onChange={setQty} />
         </div>
 
         {/* Time */}
-        <Label>Kailan available?</Label>
+        <Label>{t('Kailan available?', 'Available when?')}</Label>
         <div className="mb-4 flex flex-wrap gap-2">
-          {TIMES.map((t, i) => (
+          {TIMES.map((time, i) => (
             <button
-              key={t}
+              key={time}
               type="button"
               onClick={() => setTimeIdx(i)}
               className={`rounded-full border px-4 py-2.5 text-[14px] font-semibold transition active:scale-95 ${
                 timeIdx === i ? 'border-green bg-green text-white' : 'border-border bg-white text-ink hover:bg-green-tint'
               }`}
             >
-              {t}
+              {time}
             </button>
           ))}
         </div>
 
         {/* Discount */}
-        <Label>Diskwento</Label>
+        <Label>{t('Diskwento', 'Discount')}</Label>
         <div className="mb-5 rounded-card border border-border bg-white p-4 shadow-card">
           <input
             type="range"
@@ -113,7 +115,7 @@ export default function ForwardList() {
             value={discount}
             onChange={(e) => setDiscount(Number(e.target.value))}
             className="w-full accent-[#1e6a41]"
-            aria-label="Antas ng diskwento"
+            aria-label={t('Antas ng diskwento', 'Discount level')}
           />
           <div className="mt-1 flex items-center justify-between">
             <span className="text-[13px] font-semibold text-muted">{discount}% off</span>
@@ -125,7 +127,7 @@ export default function ForwardList() {
         </div>
 
         {/* Buyer-side preview */}
-        <Label>Ganito makikita ng mga suki</Label>
+        <Label>{t('Ganito makikita ng mga suki', 'This is how regulars see it')}</Label>
         <div className="rounded-card border border-dashed border-green/40 bg-white p-3.5 shadow-card">
           <div className="mb-2 flex items-center gap-1.5 text-[11.5px] font-bold text-amber-deep">
             <Eye className="size-[14px]" strokeWidth={2.5} /> PREVIEW • Buyer app
@@ -134,7 +136,7 @@ export default function ForwardList() {
             <span className="grid size-12 place-items-center rounded-2xl bg-amber-tint text-[26px]">{sel.emoji}</span>
             <div>
               <span className="inline-flex items-center gap-1 rounded-full bg-amber-tint px-2 py-0.5 text-[11px] font-bold text-amber-deep">
-                <CalendarClock className="size-3" strokeWidth={2.6} /> Naka-iskedyul • {TIMES[timeIdx]}
+                <CalendarClock className="size-3" strokeWidth={2.6} /> {t('Naka-iskedyul', 'Scheduled')} • {TIMES[timeIdx]}
               </span>
               <p className="mt-1 font-heading text-[15px] font-extrabold text-ink">
                 Forward-listed: {qty}kg {sel.item}

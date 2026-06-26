@@ -5,31 +5,33 @@ import ScreenShell from '../../components/ScreenShell'
 import SectionHeading from '../../components/SectionHeading'
 import Coachmark, { type CoachStep } from '../../components/Coachmark'
 import { useApp } from '../../lib/AppContext'
+import { useT } from '../../lib/i18n'
 import { vendor } from '../../data/personas'
 import { peso } from '../../lib/format'
-
-const coachSteps: CoachStep[] = [
-  { title: 'Ito ang dashboard mo', body: 'Buod ng benta mo ngayon at ng surplus na pwede mo pang ibenta bago magsara ang palengke.', where: 'top' },
-  { title: 'Mag-list gamit ang boses', body: 'Pindutin ang “Mag-list ng Surplus” at magsalita lang — walang kailangang i-type.', where: 'mid' },
-  { title: 'Tingnan ang reservations', body: 'Sa “Listings” makikita mo kung sino ang nag-reserve. I-mark kapag nabenta na.', where: 'bottom' },
-]
 
 export default function Dashboard() {
   const navigate = useNavigate()
   const { vendorPosts } = useApp()
+  const t = useT()
   const active = vendorPosts.filter((p) => p.status === 'active')
   const reservedTotal = active.reduce((s, p) => s + p.reservations.length, 0)
 
+  const coachSteps: CoachStep[] = [
+    { title: t('Ito ang dashboard mo', 'This is your dashboard'), body: t('Buod ng benta mo ngayon at ng surplus na pwede mo pang ibenta bago magsara ang palengke.', 'A summary of today’s sales and the surplus you can still sell before the market closes.'), where: 'top' },
+    { title: t('Mag-list gamit ang boses', 'List using your voice'), body: t('Pindutin ang “Mag-list ng Surplus” at magsalita lang — walang kailangang i-type.', 'Tap “List Surplus” and just speak — no typing needed.'), where: 'mid' },
+    { title: t('Tingnan ang reservations', 'Check reservations'), body: t('Sa “Listings” makikita mo kung sino ang nag-reserve. I-mark kapag nabenta na.', 'In “Listings” you’ll see who reserved. Mark it when sold.'), where: 'bottom' },
+  ]
+
   return (
-    <ScreenShell appBar={<AppBar title="Dashboard" role="vendor" helpKey="vendor-dashboard" subtitle={vendor.stall} />}>
+    <ScreenShell appBar={<AppBar title={t('Dashboard', 'Dashboard')} role="vendor" helpKey="vendor-dashboard" subtitle={vendor.stall} />}>
       {/* Greeting + sales */}
       <div className="bg-green px-4 pb-5 pt-1 text-white">
-        <p className="font-heading text-[22px] font-extrabold leading-tight">Magandang hapon, {vendor.name}! 🌤️</p>
-        <p className="mt-1 text-[14px] text-white">Heto ang takbo ng benta mo ngayong araw.</p>
+        <p className="font-heading text-[22px] font-extrabold leading-tight">{t('Magandang hapon', 'Good afternoon')}, {vendor.name}! 🌤️</p>
+        <p className="mt-1 text-[14px] text-white">{t('Heto ang takbo ng benta mo ngayong araw.', 'Here’s how your sales are going today.')}</p>
         <div className="mt-3 grid grid-cols-3 gap-2">
-          <HeroStat label="Benta ngayon" value={peso(3240)} />
-          <HeroStat label="Nabenta" value="11 item" />
-          <HeroStat label="Reserved" value={`${reservedTotal} bago`} />
+          <HeroStat label={t('Benta ngayon', 'Sales today')} value={peso(3240)} />
+          <HeroStat label={t('Nabenta', 'Sold')} value={`11 ${t('item', 'items')}`} />
+          <HeroStat label={t('Reserved', 'Reserved')} value={`${reservedTotal} ${t('bago', 'new')}`} />
         </div>
       </div>
 
@@ -38,10 +40,10 @@ export default function Dashboard() {
         <div className="rounded-card border border-amber/40 bg-amber-tint p-4">
           <div className="flex items-center gap-2 text-amber-deep">
             <Sun className="size-[18px]" strokeWidth={2.5} />
-            <span className="text-[13px] font-bold uppercase tracking-wide">Surplus to clear</span>
+            <span className="text-[13px] font-bold uppercase tracking-wide">{t('Surplus to clear', 'Surplus to clear')}</span>
           </div>
           <p className="mt-1.5 text-[15px] font-semibold leading-snug text-ink">
-            May <b>3 oras</b> pa bago magsara. I-list ang surplus mo para hindi masayang.
+            {t('May', 'You have')} <b>{t('3 oras', '3 hours')}</b> {t('pa bago magsara. I-list ang surplus mo para hindi masayang.', 'left before closing. List your surplus so it doesn’t go to waste.')}
           </p>
           <div className="mt-3 grid grid-cols-2 gap-2.5">
             <button
@@ -50,7 +52,7 @@ export default function Dashboard() {
               className="tap-target flex flex-col items-center justify-center gap-1 rounded-2xl bg-green px-3 py-3 text-white shadow-pop transition active:scale-[0.97]"
             >
               <Mic className="size-6" strokeWidth={2.3} />
-              <span className="font-heading text-[14px] font-bold">Mag-list ng Surplus</span>
+              <span className="font-heading text-[14px] font-bold">{t('Mag-list ng Surplus', 'List Surplus')}</span>
             </button>
             <button
               type="button"
@@ -66,18 +68,18 @@ export default function Dashboard() {
         {/* Active listings */}
         <div className="mt-6">
           <SectionHeading
-            hint="Live na views at reservations"
+            hint={t('Live na views at reservations', 'Live views and reservations')}
             action={
               <button
                 type="button"
                 onClick={() => navigate('/vendor/listings')}
                 className="flex items-center gap-0.5 text-[13px] font-bold text-green"
               >
-                Lahat <ChevronRight className="size-4" strokeWidth={2.6} />
+                {t('Lahat', 'All')} <ChevronRight className="size-4" strokeWidth={2.6} />
               </button>
             }
           >
-            Active na listing
+            {t('Active na listing', 'Active listings')}
           </SectionHeading>
 
           <div className="space-y-3">
@@ -94,14 +96,14 @@ export default function Dashboard() {
                     {p.item} • {p.qtyKg}kg
                   </p>
                   <p className="text-[13px] text-muted">
-                    {peso(p.price)}/kg • sariwa hanggang {p.freshUntil}
+                    {peso(p.price)}/kg • {t('sariwa hanggang', 'fresh until')} {p.freshUntil}
                   </p>
                   <div className="mt-1.5 flex items-center gap-3 text-[12.5px] font-semibold">
                     <span className="inline-flex items-center gap-1 text-muted">
                       <Eye className="size-[15px]" strokeWidth={2.3} /> {p.views}
                     </span>
                     <span className="inline-flex items-center gap-1 text-green-deep">
-                      <Users className="size-[15px]" strokeWidth={2.3} /> {p.reservations.length} reserved
+                      <Users className="size-[15px]" strokeWidth={2.3} /> {p.reservations.length} {t('reserved', 'reserved')}
                     </span>
                   </div>
                 </div>
@@ -115,7 +117,7 @@ export default function Dashboard() {
         <div className="mt-5 flex items-center gap-2.5 rounded-2xl bg-green-tint px-3.5 py-3">
           <TrendingUp className="size-5 shrink-0 text-green" strokeWidth={2.4} />
           <p className="text-[13.5px] leading-snug text-green-deep">
-            <b>Tip:</b> mas mabilis maubos ang naka-discount na surplus. <Clock className="inline size-[14px]" strokeWidth={2.4} /> Bababa ang presyo paglapit ng 6 PM.
+            <b>Tip:</b> {t('mas mabilis maubos ang naka-discount na surplus.', 'discounted surplus sells out faster.')} <Clock className="inline size-[14px]" strokeWidth={2.4} /> {t('Bababa ang presyo paglapit ng 6 PM.', 'Prices drop closer to 6 PM.')}
           </p>
         </div>
       </div>
