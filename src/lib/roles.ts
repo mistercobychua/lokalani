@@ -42,9 +42,9 @@ export interface RoleMeta {
 export const roleMeta: Record<Role, RoleMeta> = {
   buyer: {
     id: 'buyer',
-    label: 'Carinderia',
-    who: 'Ako ay Carinderia',
-    whoEn: 'I’m a Carinderia',
+    label: 'Carinderia Owner',
+    who: 'Ako ay Carinderia Owner',
+    whoEn: 'I’m a Carinderia Owner',
     benefit: 'Bumili ng murang sariwa, malapit lang sa’yo.',
     benefitEn: 'Buy fresh produce cheap, right near you.',
     icon: ShoppingBasket,

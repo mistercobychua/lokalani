@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react'
 import LeafMark from './LeafMark'
 
+const LOGO_EXTS = ['png', 'svg', 'jpg', 'jpeg', 'webp']
+
 /** Branded startup screen — shows briefly on launch, then fades into the launcher. */
 export default function Splash({ onDone }: { onDone: () => void }) {
   const [leaving, setLeaving] = useState(false)
+  const [extIdx, setExtIdx] = useState(0)
+  const useLogoImg = extIdx < LOGO_EXTS.length
 
   useEffect(() => {
     const t1 = window.setTimeout(() => setLeaving(true), 1050)
@@ -26,11 +30,22 @@ export default function Splash({ onDone }: { onDone: () => void }) {
       <LeafMark variant="color" className="absolute right-2 top-24 size-12 opacity-10" />
       <LeafMark variant="color" className="absolute bottom-28 left-8 size-10 opacity-10" />
 
-      {/* logo lockup */}
-      <div className="anim-pop relative z-10 flex flex-col items-center">
-        <LeafMark variant="color" className="size-[88px] drop-shadow-sm" />
-        <div className="mt-3 font-heading text-[40px] font-extrabold tracking-tight text-green-deep">LokalANI</div>
-        <p className="mt-1 text-[14.5px] font-semibold italic text-green">Lokal na Ani. Lokal na Asenso.</p>
+      {/* logo lockup — uses /logo.{png,svg,...} when present, else the SVG mark + text */}
+      <div className="anim-pop relative z-10 flex flex-col items-center px-8">
+        {useLogoImg ? (
+          <img
+            src={`/logo.${LOGO_EXTS[extIdx]}`}
+            alt="LokalANI — Lokal na Ani. Lokal na Asenso."
+            className="w-60 max-w-[78%] object-contain"
+            onError={() => setExtIdx((i) => i + 1)}
+          />
+        ) : (
+          <>
+            <LeafMark variant="color" className="size-[88px] drop-shadow-sm" />
+            <div className="mt-3 font-heading text-[40px] font-extrabold tracking-tight text-green-deep">LokalANI</div>
+            <p className="mt-1 text-[14.5px] font-semibold italic text-green">Lokal na Ani. Lokal na Asenso.</p>
+          </>
+        )}
       </div>
 
       {/* gentle hills */}

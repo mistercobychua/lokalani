@@ -80,8 +80,8 @@ export const listings: Listing[] = [
   {
     id: 'saging',
     emoji: '🍌',
-    item: 'Saging na Saba',
-    itemEn: 'saba bananas',
+    item: 'Saging',
+    itemEn: 'bananas',
     category: 'prutas',
     qtyKg: 6,
     origPrice: 60,
