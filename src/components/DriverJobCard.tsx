@@ -3,6 +3,8 @@ import { MapPin, Package, Route, BadgeCheck, ChevronRight } from 'lucide-react'
 import type { Job } from '../types'
 import { peso } from '../lib/format'
 import { useT } from '../lib/i18n'
+import { produceImageId } from '../data/listings'
+import ProduceGlyph from './ProduceGlyph'
 
 export default function DriverJobCard({ job }: { job: Job }) {
   const t = useT()
@@ -13,9 +15,7 @@ export default function DriverJobCard({ job }: { job: Job }) {
     >
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-2.5">
-          <span className="grid size-11 place-items-center rounded-2xl bg-green-tint text-[24px]">
-            {job.emoji}
-          </span>
+          <ProduceGlyph emoji={job.emoji} imageId={produceImageId(job.emoji)} size="sm" boxClass="size-11 rounded-2xl" />
           <div>
             <h3 className="font-heading text-[16px] font-extrabold leading-tight text-ink">
               {job.pickupVendor}

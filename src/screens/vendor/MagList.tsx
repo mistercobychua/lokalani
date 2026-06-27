@@ -5,8 +5,10 @@ import AppBar from '../../components/AppBar'
 import ScreenShell from '../../components/ScreenShell'
 import StickyBar from '../../components/StickyBar'
 import PrimaryButton from '../../components/PrimaryButton'
+import ProduceGlyph from '../../components/ProduceGlyph'
 import { useApp } from '../../lib/AppContext'
 import { useT } from '../../lib/i18n'
+import { produceImageId } from '../../data/listings'
 import { peso } from '../../lib/format'
 
 type Phase = 'idle' | 'listening' | 'filled'
@@ -122,7 +124,7 @@ export default function MagList() {
 
             <div className="rounded-card border border-border bg-white p-4 shadow-card">
               <div className="flex items-center gap-3">
-                <span className="grid size-14 place-items-center rounded-2xl bg-green-tint text-[32px]">{PARSED.emoji}</span>
+                <ProduceGlyph emoji={PARSED.emoji} imageId={produceImageId(PARSED.item)} size="md" boxClass="size-14 rounded-2xl" />
                 <div className="flex-1">
                   <p className="font-heading text-[19px] font-extrabold text-ink">{PARSED.item}</p>
                   <p className="text-[13.5px] text-muted">{t('Nakuha mula sa boses mo', 'Captured from your voice')}</p>

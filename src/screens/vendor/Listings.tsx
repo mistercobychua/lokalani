@@ -2,8 +2,10 @@ import { MapPin, Eye, Users, Check, CalendarClock, TrendingDown } from 'lucide-r
 import AppBar from '../../components/AppBar'
 import ScreenShell from '../../components/ScreenShell'
 import EmptyState from '../../components/EmptyState'
+import ProduceGlyph from '../../components/ProduceGlyph'
 import { useApp } from '../../lib/AppContext'
 import { useT } from '../../lib/i18n'
+import { produceImageId } from '../../data/listings'
 import { peso } from '../../lib/format'
 import type { VendorPost } from '../../lib/AppContext'
 
@@ -38,7 +40,7 @@ function ListingRow({ post, onSold }: { post: VendorPost; onSold: () => void }) 
   return (
     <div className={`overflow-hidden rounded-card border bg-white shadow-card ${sold ? 'border-border opacity-75' : 'border-border'}`}>
       <div className="flex items-center gap-3 p-3.5">
-        <span className="grid size-[52px] place-items-center rounded-2xl bg-green-tint text-[28px]">{post.emoji}</span>
+        <ProduceGlyph emoji={post.emoji} imageId={produceImageId(post.item)} size="sm" boxClass="size-[52px] rounded-2xl" />
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
             <p className="font-heading text-[16px] font-extrabold text-ink">{post.item} • {post.qtyKg}kg</p>

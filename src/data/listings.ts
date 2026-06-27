@@ -117,6 +117,21 @@ export function listingById(id: string): Listing | undefined {
   return listings.find((l) => l.id === id)
 }
 
+/** Map a produce item name or emoji to its photo id in /public/produce. */
+const PRODUCE_IMG: Record<string, string> = {
+  kamatis: 'kamatis', '🍅': 'kamatis',
+  galunggong: 'galunggong', '🐟': 'galunggong',
+  repolyo: 'repolyo', '🥬': 'repolyo',
+  talong: 'talong', '🍆': 'talong',
+  saging: 'saging', '🍌': 'saging',
+  kamote: 'kamote', '🥔': 'kamote',
+}
+
+export function produceImageId(key?: string): string | undefined {
+  if (!key) return undefined
+  return PRODUCE_IMG[key.toLowerCase().trim()] ?? PRODUCE_IMG[key.trim()]
+}
+
 export const categoryLabels: { key: 'lahat' | Listing['category']; label: string; labelEn: string; emoji: string }[] = [
   { key: 'lahat', label: 'Lahat', labelEn: 'All', emoji: '🧺' },
   { key: 'gulay', label: 'Gulay', labelEn: 'Veg', emoji: '🥬' },

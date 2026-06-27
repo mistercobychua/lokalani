@@ -3,10 +3,12 @@ import { Mic, CalendarClock, Eye, Users, TrendingUp, Clock, ChevronRight, Sun } 
 import AppBar from '../../components/AppBar'
 import ScreenShell from '../../components/ScreenShell'
 import SectionHeading from '../../components/SectionHeading'
+import ProduceGlyph from '../../components/ProduceGlyph'
 import Coachmark, { type CoachStep } from '../../components/Coachmark'
 import { useApp } from '../../lib/AppContext'
 import { useT } from '../../lib/i18n'
 import { vendor } from '../../data/personas'
+import { produceImageId } from '../../data/listings'
 import { peso } from '../../lib/format'
 
 export default function Dashboard() {
@@ -90,7 +92,7 @@ export default function Dashboard() {
                 onClick={() => navigate('/vendor/listings')}
                 className="flex w-full items-center gap-3 rounded-card border border-border bg-white p-3 text-left shadow-card transition active:scale-[0.99]"
               >
-                <span className="grid size-12 place-items-center rounded-2xl bg-green-tint text-[26px]">{p.emoji}</span>
+                <ProduceGlyph emoji={p.emoji} imageId={produceImageId(p.item)} size="sm" boxClass="size-12 rounded-2xl" />
                 <div className="min-w-0 flex-1">
                   <p className="font-heading text-[15.5px] font-bold text-ink">
                     {p.item} • {p.qtyKg}kg

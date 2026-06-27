@@ -5,9 +5,11 @@ import ScreenShell from '../../components/ScreenShell'
 import StickyBar from '../../components/StickyBar'
 import PrimaryButton from '../../components/PrimaryButton'
 import RouteMap from '../../components/RouteMap'
+import ProduceGlyph from '../../components/ProduceGlyph'
 import { jobById } from '../../data/jobs'
 import { useApp } from '../../lib/AppContext'
 import { useT } from '../../lib/i18n'
+import { produceImageId } from '../../data/listings'
 import { peso } from '../../lib/format'
 
 export default function JobDetail() {
@@ -43,7 +45,7 @@ export default function JobDetail() {
       <div className="px-4 pb-6 pt-4">
         {/* Summary */}
         <div className="flex items-center gap-3 rounded-card border border-border bg-white p-3.5 shadow-card">
-          <span className="grid size-14 place-items-center rounded-2xl bg-green-tint text-[30px]">{job.emoji}</span>
+          <ProduceGlyph emoji={job.emoji} imageId={produceImageId(job.emoji)} size="md" boxClass="size-14 rounded-2xl" />
           <div className="flex-1">
             <p className="font-heading text-[16px] font-extrabold text-ink">{job.pickupVendor}</p>
             <p className="text-[13px] text-muted">{job.cargo}</p>
